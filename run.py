@@ -20,7 +20,7 @@ def init_env():
     logger.info("初始化运行环境!")
 
 def init_report():
-    cmd = "allure generate --clean data -o reports"
+    cmd = "allure generate -o reports --clean data"
     subprocess.call(cmd, shell=True)
     project_path = os.path.abspath(os.path.dirname(__file__))
     report_path = project_path + "/reports/" + "index.html"

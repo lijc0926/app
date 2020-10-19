@@ -59,7 +59,7 @@ def pytest_runtest_makereport(item, call):
             f.write(rep.nodeid + extra + "\n")
         pic_info = adb_screen_shot()
         with allure.step('添加失败截图...'):
-            allure.attach("失败截图", pic_info, allure.attach_type.JPG)
+            allure.attach(pic_info, "失败截图", allure.attachment_type.JPG)
 
 
 def allow(driver):
@@ -82,6 +82,7 @@ def screen_shot(driver):
         logger.info('截图:{}'.format(pic_name))
         f = open(pic_name, 'rb')  # 二进制方式打开图文件
         base64_str = base64.b64encode(f.read())  # 读取文件内容，转换为base64编码
+        print(base64_str)
         f.close()
         return base64_str
     except Exception as e:
@@ -97,6 +98,7 @@ def adb_screen_shot():
     fail_time = time.strftime('%Y%m%d%H%M%S', time.localtime(time.time()))
     fail_pic = str(fail_time) + "截图.jpg"
     pic_name = os.path.join(screenshot_folder, fail_pic)
+    print(pic_name)
     cmd = 'adb shell /system/bin/screencap -p /sdcard/screenshot.jpg'
     subprocess.call(cmd,shell=True)
     cmd = 'adb pull /sdcard/screenshot.jpg {}'.format(pic_name)
@@ -131,3 +133,10 @@ def ios_allow(driver):
     if elem.exists:
         elem.click()
         logger.info("关闭升级")
+
+
+def successfull_shot():
+    pic_info = adb_screen_shot()
+
+    with allure.step('添加成功截图...'):
+        allure.attach(pic_info, "成功截图", attachment_type=allure.attachment_type.PNG)

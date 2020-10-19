@@ -7,15 +7,14 @@
 @describe: 对元素基本操作封装
 """
 
-import pytest,time,os,re,yaml,json,sys,xmltodict
+import imp,pytest,time,os,re,yaml,json,sys,xmltodict
 import allure
 from allure_commons._allure import attach
 # from allure.constants import AttachmentType
 from allure_commons.types import AttachmentType
 import subprocess,base64
 sys.path.append("..")
-reload(sys)
-sys.setdefaultencoding("utf-8")
+imp.reload(sys)
 from tools.loggers import JFMlogging
 from config import *
 logger = JFMlogging().getloger()
